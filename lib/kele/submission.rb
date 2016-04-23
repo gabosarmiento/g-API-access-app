@@ -1,6 +1,4 @@
-require 'kele/user'
 module Submission
-  include User
   def create_submission(checkpoint_id, assignment_branch, assignment_commit_link, comment)
     student_enrollment_id = get_me["current_enrollment"]['id']
     data = {
