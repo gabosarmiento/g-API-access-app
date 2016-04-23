@@ -1,7 +1,9 @@
+require 'kele/roadmap'
 require 'httparty'
 # test this code in irb after typing => $: << 'lib'
 class Kele
   include HTTParty
+  include Roadmap
   attr_accessor :auth_token
   base_uri 'https://www.bloc.io/api/v1'
 
