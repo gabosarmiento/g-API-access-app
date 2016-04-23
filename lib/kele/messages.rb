@@ -1,4 +1,6 @@
+require 'kele/user'
 module Messages
+  include User
   def get_messages(arg = nil)
     if arg.nil? #if no page number specified - get total number of messages
       response = self.class.get("/message_threads", headers: { "authorization" => @auth_token })
@@ -15,9 +17,10 @@ module Messages
   end
 
   def create_message(subject = nil, body = nil, token = nil)
+   user = get_me
    data = {
-     user_id: student_id,
-     recipient_id: student_info("mentor_id"),
+     user_id: user["id"],
+     recipient_id: user["current_enrollment"]['mentor_id'],
      token: token,
      subject: subject,
      "stripped-text" => body

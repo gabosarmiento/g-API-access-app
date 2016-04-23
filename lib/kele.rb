@@ -1,12 +1,17 @@
+require 'kele/user'
 require 'kele/roadmap'
 require 'kele/messages'
+require 'kele/submission'
 require 'httparty'
 require 'pp'
 # test this code in irb after typing => $: << 'lib'
 class Kele
   include HTTParty
+  include User
   include Roadmap
   include Messages
+  include Submission
+
   attr_accessor :auth_token
   base_uri 'https://www.bloc.io/api/v1'
 
@@ -15,10 +20,6 @@ class Kele
     raise StandardError.new('Invalid credentials') unless @auth_token
   end
 
-  def get_me
-    response = self.class.get('/users/me', headers: { "authorization" => @auth_token })
-    JSON.parse(response.body)
-  end
   # Retrieve a list of a mentor's available time slots for the current user
   def get_mentor_availability(mentor_id)
     # mentor_id could be replaced with {current_enrollment['mentor_id']} form response
