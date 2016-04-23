@@ -1,9 +1,12 @@
 require 'kele/roadmap'
+require 'kele/messages'
 require 'httparty'
+require 'pp'
 # test this code in irb after typing => $: << 'lib'
 class Kele
   include HTTParty
   include Roadmap
+  include Messages
   attr_accessor :auth_token
   base_uri 'https://www.bloc.io/api/v1'
 
@@ -22,5 +25,5 @@ class Kele
     response = self.class.get('/mentors/' + mentor_id + '/student_availability', headers: { "authorization" => @auth_token })
     JSON.parse(response.body)
   end
-  
+
 end
